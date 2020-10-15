@@ -1,5 +1,6 @@
 package com.codegym.service.customer;
 
+import com.codegym.exception.NotFoundException;
 import com.codegym.model.Customer;
 import com.codegym.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ public class CustomerService implements ICustomerService{
     }
 
     @Override
-    public Customer findById(Long id) {
-        return customerRepository.findOne(id);
+    public Customer findById(Long id) throws NotFoundException {
+        Customer customer = customerRepository.findOne(id);
+        if (customer == null) throw new NotFoundException("Customer with id= " +id +" is not found");
+        return customer;
     }
 
     @Override
