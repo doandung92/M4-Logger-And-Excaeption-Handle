@@ -1,5 +1,6 @@
 package com.codegym;
 
+import com.codegym.concern.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -32,6 +34,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("com.codegym")
+@EnableJpaRepositories("com.codegym.repository")
 @EnableSpringDataWebSupport
 @EnableAspectJAutoProxy
 public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
@@ -113,5 +116,8 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
     }
-
+    @Bean
+    Logger logger(){
+        return new Logger();
+    }
 }
